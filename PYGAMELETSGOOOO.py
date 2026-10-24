@@ -1,4 +1,5 @@
 import pygame as py
+import random
 
 py.init()
 screen = py.display.set_mode((800, 600))
@@ -13,6 +14,11 @@ poppy = py.image.load("Assets\\minecraft-poppy.png")
 poppy = py.transform.scale(poppy, (70, 70))
 poppysprite = poppy.get_rect()
 poppysprite.center = (600, 300)
+
+score = 0
+
+font1 = py.font.SysFont("Arial", 17)
+text1 = font1.render("Score: " + str(score), "#FC7E2B", True)
 
 running = True
 while running:
@@ -30,9 +36,16 @@ while running:
     if keys[py.K_DOWN]:
         beesprite.y = beesprite.y + 5
 
+    if beesprite.colliderect(poppysprite):
+        poppysprite.x = random.randint(0, 750)
+        poppysprite.y = random.randint(0, 550)
+        score = score + 1
+
     screen.fill("#ADEFFF")
+    text1 = font1.render("Score: " + str(score), "#FC7E2B", True)
     screen.blit(bee, beesprite)
     screen.blit(poppy, poppysprite)
+    screen.blit(text1, (370 , 50))
     py.display.update()
 
 
